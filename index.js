@@ -440,9 +440,10 @@ instance.prototype.action = function(action, extras) {
 		});
 
 		// If we change page while pushing a button, we need to tell the button that we were done with it
-		// TODO: Somehow handle the futile "action_release" of the same button on the new page
 		if (surface == extras.deviceid) {
 			self.system.emit('bank-pressed', extras.page, extras.bank, false, surface);
+			// Mark the futile "action_release" of the button from the previous page as something to ignore
+			self.system.emit('ignore-bank-pressed', opt.page, extras.bank, false, surface);
 		}
 	}
 
